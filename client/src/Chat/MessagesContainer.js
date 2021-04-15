@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 
-class MessageContainer extends Component {
+class MessagesContainer extends Component {
   render() {
+    console.log(this.props.messages);
     return <div>Messages Container</div>;
   }
 }
 
-export default MessageContainer;
+export default MessagesContainer;
