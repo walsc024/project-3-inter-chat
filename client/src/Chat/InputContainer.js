@@ -34,6 +34,7 @@ class InputContainer extends Component {
     );
   }
   handleSubmit = () => {
+    this.props.handleSubmit(this.state.sender, this.state.content);
     this.setState({
       sender: "",
       content: "",

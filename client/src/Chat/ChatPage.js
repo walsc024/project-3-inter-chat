@@ -48,6 +48,30 @@ class ChatPage extends Component {
       </Grid>
     );
   }
+
+  handleSubmit = (sender, content) => {
+
+    let reqBody = {
+      sender: sender,
+      content: content
+    }
+
+    fetch("http://localhost:8080/api/message", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(reqBody)
+    }).then((res) => {
+      return res.json();
+    }).then((resJson) => {
+      console.log(resJson)
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
+
 }
 
 export default ChatPage;
