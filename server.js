@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Message = require("./models/message");
+const socket = require('socket.io');
 
 const PORT = process.env.PORT || 8080;
 
@@ -66,10 +67,21 @@ mongoose
   .then(() => {
     console.log("connected to the db");
 
-    app.listen(PORT, () => {
+    let server = app.listen(PORT, () => {
       console.log("I am listening to port: ", PORT);
     });
+    let io = socket(server);
+
+  io.on("connection", (data) => {
+     console.log("Made conncetion")
+  });
   })
   .catch((err) => {
     console.log(err);
   });
+
+  // let io = socket(server);
+
+  // io.on("connection", (data) => {
+  //    console.log("Made conncetion")
+  // });
