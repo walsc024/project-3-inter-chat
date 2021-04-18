@@ -1,8 +1,10 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const path = require("path");
 const mongoose = require("mongoose");
 const Message = require("./models/message");
+const socket = require("socket.io");
 
 const PORT = process.env.PORT || 8080;
 
@@ -66,8 +68,16 @@ mongoose
   .then(() => {
     console.log("connected to the db");
 
-    app.listen(PORT, () => {
-      console.log("I am listening to port: ", PORT);
+    let server = app.listen(PORT, () => {
+      console.log(`Listening on port ${PORT}`);
+    });
+
+    let io = socket(server);
+
+    io.on("connection", (socket) => {
+      socket.on("new-message", (data) => {
+        io.sockets.emit("new-message", data);
+      });
     });
   })
   .catch((err) => {

@@ -3,13 +3,22 @@ import { Grid } from "semantic-ui-react";
 import MessagesContainer from "./MessagesContainer";
 import InputContainer from "./InputContainer";
 import "./ChatPage.css";
+import openSocket from "socket.io-client";
 
 class ChatPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       messages: [],
+      socket: openSocket("http://localhost:8080"),
     };
+    this.state.socket.on("new-message", (message) => {
+      let currentMessages = this.state.messages;
+      currentMessages.push(message);
+      this.setState({
+        messages: currentMessages,
+      });
+    });
   }
 
   componentDidMount() {
@@ -50,28 +59,28 @@ class ChatPage extends Component {
   }
 
   handleSubmit = (sender, content) => {
-
     let reqBody = {
       sender: sender,
-      content: content
-    }
+      content: content,
+    };
 
     fetch("http://localhost:8080/api/message", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(reqBody)
-    }).then((res) => {
-      return res.json();
-    }).then((resJson) => {
-      console.log(resJson)
-    }).catch((err) => {
-      console.log(err);
+      body: JSON.stringify(reqBody),
     })
-  }
-
-
+      .then((res) => {
+        return res.json();
+      })
+      .then((resJson) => {
+        this.state.socket.emit("new-message", resJson);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 }
 
 export default ChatPage;
