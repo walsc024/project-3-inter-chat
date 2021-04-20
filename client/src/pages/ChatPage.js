@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Grid } from "semantic-ui-react";
-import MessagesContainer from "./MessagesContainer";
-import InputContainer from "./InputContainer";
+import MessagesContainer from "../components/MessagesContainer";
+import InputContainer from "../components/InputContainer";
 import "./ChatPage.css";
 import openSocket from "socket.io-client";
 
