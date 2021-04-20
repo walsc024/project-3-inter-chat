@@ -1,11 +1,14 @@
-const express = require("express");
-const app = express();
 const bodyParser = require("body-parser");
-const path = require("path");
+const express = require("express");
 const mongoose = require("mongoose");
-const Message = require("./models/message");
-const socket = require("socket.io");
+const path = require("path");
+const http = require("http");
 
+const Message = require("./models/message");
+
+const app = express();
+const server = http.createServer(app);
+const io = require("socket.io")(server);
 const PORT = process.env.PORT || 8080;
 
 // Assign the value of your mongoDB connection string to this constant
@@ -68,15 +71,15 @@ mongoose
   .then(() => {
     console.log("connected to the db");
 
-    let server = app.listen(PORT, () => {
+    app.listen(PORT, () => {
       console.log(`Listening on port ${PORT}`);
-    });
 
-    let io = socket(server);
-
-    io.on("connection", (socket) => {
-      socket.on("new-message", (data) => {
-        io.sockets.emit("new-message", data);
+      io.on("connection", (socket) => {
+        console.log("a new connection was established");
+        socket.on("new-message", (data) => {
+          console.log("A new message was received");
+          io.sockets.emit("new-message", data);
+        });
       });
     });
   })

@@ -3,14 +3,22 @@ import { Grid } from "semantic-ui-react";
 import MessagesContainer from "../components/MessagesContainer";
 import InputContainer from "../components/InputContainer";
 import "./ChatPage.css";
-import openSocket from "socket.io-client";
+import { io } from "socket.io-client";
 
 class ChatPage extends Component {
   constructor(props) {
     super(props);
+
+    const socket = io();
+
+    socket.on("connect", () => {
+      console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    });
+
     this.state = {
       messages: [],
-      socket: openSocket("http://localhost:8080"),
+      // socket: openSocket("http://localhost:8080"),
+      socket,
     };
     this.state.socket.on("new-message", (message) => {
       let currentMessages = this.state.messages;
@@ -75,7 +83,13 @@ class ChatPage extends Component {
         return res.json();
       })
       .then((resJson) => {
+        console.log("I am emitting a message on the WS: ", resJson);
+
+        console.log("Connected: ", this.state.socket.connected);
+
         this.state.socket.emit("new-message", resJson);
+
+        console.log("Current state of socket: ", this.state.socket);
       })
       .catch((err) => {
         console.log(err);
