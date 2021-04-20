@@ -1,14 +1,21 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 import ChatPage from "./pages/ChatPage";
-// import LandingPage from "./pages/LandingPage";
+import LandingPage from "./pages/LandingPage";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        {/* <LandingPage /> */}
-        <ChatPage />
-      </div>
+      <Router>
+        <div>
+          <Switch>
+            <Route exact path="/" component={LandingPage} />
+            {/* <Route exact path="/dashboard" component={DashBoard} /> */}
+            <Route exact path="/chatpage" component={ChatPage} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
