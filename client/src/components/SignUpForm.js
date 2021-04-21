@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Input, Button, Select } from "semantic-ui-react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const genderOptions = [
   { key: "m", text: "Male", value: "male" },
@@ -19,7 +20,9 @@ const choiceLanguageOptions = [
   { key: "s", text: "Spanish", value: "spanish" },
 ];
 
-const SignUpForm = () => (
+const SignUpForm = () => {
+  const { loginWithRedirect } = useAuth0();
+  return (
   <Form>
     <Form.Group widths="equal">
       <Form.Field
@@ -86,8 +89,14 @@ const SignUpForm = () => (
       control={Button}
       content="Confirm"
       label=""
+      onClick={() =>
+        loginWithRedirect({
+          screen_hint: "signup",
+        })
+      }
     />
   </Form>
-);
+  )
+};
 
 export default SignUpForm;
