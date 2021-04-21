@@ -1,7 +1,7 @@
 import React from "react";
 
 import SignUpForm from "../components/SignUpForm";
-import LandingHeader from "../components/LandingHeader";
+import LoginButton from "../components/LandingHeader";
 
 class LandingPage extends React.Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class LandingPage extends React.Component {
   render() {
     return (
       <>
-        <LandingHeader />
+        <LoginButton />
         <SignUpForm />
       </>
     );
