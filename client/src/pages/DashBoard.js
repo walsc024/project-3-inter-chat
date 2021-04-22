@@ -1,19 +1,26 @@
 import React from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Card } from "semantic-ui-react";
 
 import Header from "../components/Header";
 import StartButton from "../components/StartButton";
+import LangDropdown from "../components/LangDropdown";
 
 class DashBoard extends React.Component {
   render() {
     return (
       <>
         <Header />
-        <Grid verticalAlign="middle" centered>
-          <Grid.Column>
-            <StartButton />
-          </Grid.Column>
-        </Grid>
+        <Card centered>
+          <Card.Content>
+            <Grid centered>
+              <Grid.Column>
+                <LangDropdown />
+                <br />
+                <StartButton />
+              </Grid.Column>
+            </Grid>
+          </Card.Content>
+        </Card>
       </>
     );
   }
