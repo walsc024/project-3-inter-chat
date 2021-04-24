@@ -1,100 +1,123 @@
-import React, { Component } from "react";
+import React from "react";
 import { Grid } from "semantic-ui-react";
 import MessagesContainer from "../components/MessagesContainer";
 import InputContainer from "../components/InputContainer";
 import "./ChatPage.css";
-import { io } from "socket.io-client";
+import useChat from "../hooks/useChat";
 
-class ChatPage extends Component {
-  constructor(props) {
-    super(props);
+const ChatPage = () => {
+  const { messages, sendMessage } = useChat(123);
 
-    const socket = io();
+  return (
+    <Grid>
+      <Grid.Column width={4} />
+      <Grid.Column width={8}>
+        <Grid.Row className="messages-container">
+          {messages.length > 0 ? (
+            <MessagesContainer messages={messages} />
+          ) : (
+            <div />
+          )}
+        </Grid.Row>
+        <Grid.Row>
+          <InputContainer handleSubmit={sendMessage} />
+        </Grid.Row>
+      </Grid.Column>
+      <Grid.Column width={4} />
+    </Grid>
+  );
+};
 
-    socket.on("connect", () => {
-      console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-    });
+// class ChatPage extends Component {
+//   constructor(props) {
+//     super(props);
 
-    this.state = {
-      messages: [],
-      // socket: openSocket("http://localhost:8080"),
-      socket,
-    };
-    this.state.socket.on("new-message", (message) => {
-      let currentMessages = this.state.messages;
-      currentMessages.push(message);
-      this.setState({
-        messages: currentMessages,
-      });
-    });
-  }
+//     const socket = io();
 
-  componentDidMount() {
-    fetch("http://localhost:8080/api/message", {
-      method: "GET",
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((resJson) => {
-        this.setState({
-          messages: resJson,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-  render() {
-    return (
-      <Grid>
-        <Grid.Column width={4} />
-        <Grid.Column width={8}>
-          <Grid.Row className="messages-container">
-            {this.state.messages.length > 0 ? (
-              <MessagesContainer messages={this.state.messages} />
-            ) : (
-              <div />
-            )}
-          </Grid.Row>
-          <Grid.Row>
-            <InputContainer handleSubmit={this.handleSubmit} />
-          </Grid.Row>
-        </Grid.Column>
-        <Grid.Column width={4} />
-      </Grid>
-    );
-  }
+//     socket.on("connect", () => {
+//       console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+//     });
 
-  handleSubmit = (sender, content) => {
-    let reqBody = {
-      sender: sender,
-      content: content,
-    };
+//     this.state = {
+//       messages: [],
+//       // socket: openSocket("http://localhost:8080"),
+//       socket,
+//     };
+//     socket.on("new-message", (message) => {
+//       let currentMessages = messages;
+//       currentMessages.push(message);
+//       this.setState({
+//         messages: currentMessages,
+//       });
+//     });
+//   }
 
-    fetch("http://localhost:8080/api/message", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(reqBody),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((resJson) => {
-        console.log("I am emitting a message on the WS: ", resJson);
+//   componentDidMount() {
+//     fetch("http://localhost:8080/api/message", {
+//       method: "GET",
+//     })
+//       .then((res) => {
+//         return res.json();
+//       })
+//       .then((resJson) => {
+//         this.setState({
+//           messages: resJson,
+//         });
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   }
+//   render() {
+//     return (
+//       <Grid>
+//         <Grid.Column width={4} />
+//         <Grid.Column width={8}>
+//           <Grid.Row className="messages-container">
+//             {messages.length > 0 ? (
+//               <MessagesContainer messages={messages} />
+//             ) : (
+//               <div />
+//             )}
+//           </Grid.Row>
+//           <Grid.Row>
+//             <InputContainer handleSubmit={this.handleSubmit} />
+//           </Grid.Row>
+//         </Grid.Column>
+//         <Grid.Column width={4} />
+//       </Grid>
+//     );
+//   }
 
-        console.log("Connected: ", this.state.socket.connected);
+//   handleSubmit = (sender, content) => {
+//     let reqBody = {
+//       sender: sender,
+//       content: content,
+//     };
 
-        this.state.socket.emit("new-message", resJson);
+//     fetch("http://localhost:8080/api/message", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(reqBody),
+//     })
+//       .then((res) => {
+//         return res.json();
+//       })
+//       .then((resJson) => {
+//         console.log("I am emitting a message on the WS: ", resJson);
 
-        console.log("Current state of socket: ", this.state.socket);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-}
+//         console.log("Connected: ", socket.connected);
+
+//         socket.emit("new-message", resJson);
+
+//         console.log("Current state of socket: ", socket);
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   };
+// }
 
 export default ChatPage;
