@@ -8,8 +8,14 @@ const Message = require("./models/message");
 
 const app = express();
 const server = http.createServer(app);
-const io = require("socket.io")(server);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+  },
+});
 const PORT = process.env.PORT || 8080;
+
+const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 
 // Assign the value of your mongoDB connection string to this constant
 const dbConnectString =
@@ -65,22 +71,34 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+io.on("connection", (socket) => {
+  console.log(`Client ${socket.id} connected`);
+
+  // Join a conversation
+  const { roomId } = socket.handshake.query;
+  socket.join(roomId);
+
+  // Listen for new messages
+  socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
+    io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+  });
+
+  // Leave the room if the user closes the socket
+  socket.on("disconnect", () => {
+    console.log(`Client ${socket.id} diconnected`);
+
+    socket.leave(roomId);
+  });
+});
+
 // Connecting to MongoDB through Mongoose
 mongoose
   .connect(dbConnectString)
   .then(() => {
     console.log("connected to the db");
 
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Listening on port ${PORT}`);
-
-      io.on("connection", (socket) => {
-        console.log("a new connection was established");
-        socket.on("new-message", (data) => {
-          console.log("A new message was received");
-          io.sockets.emit("new-message", data);
-        });
-      });
     });
   })
   .catch((err) => {
