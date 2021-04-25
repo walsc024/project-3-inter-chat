@@ -1,6 +1,6 @@
 import React from "react";
 
-import LogoutButton from "./Header";
+import MainNav from "./main-nav";
 import AuthNav from "./auth-nav";
 
 const NavBar = () => {
@@ -9,7 +9,7 @@ const NavBar = () => {
       <nav className="navbar navbar-expand-md navbar-light bg-light">
         <div className="container">
           <div className="navbar-brand logo" />
-          <LogoutButton />
+          <MainNav />
           <AuthNav />
         </div>
       </nav>

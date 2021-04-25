@@ -4,19 +4,25 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import Auth0ProviderWithHistory from "./Auth/auth0-provider-with-history";
+import { Auth0Provider } from "@auth0/auth0-react";
 
 import "./index.css";
 
+const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+const client = process.env.REACT_APP_AUTH0_CLIENT_ID;
+
 ReactDOM.render(
   <Router>
-    <Auth0ProviderWithHistory>
+    <Auth0Provider
+      domain={domain}
+      clientId={client}
+      redirectUri={window.location.origin}
+    >
       <App />
-    </Auth0ProviderWithHistory>
+    </Auth0Provider>
   </Router>,
   document.getElementById("root")
 );
-
-
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
