@@ -19,7 +19,7 @@ const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 
 // Assign the value of your mongoDB connection string to this constant
 const dbConnectString =
-  "mongodb+srv://walsc024:Poppy2537@cluster0.lcx1i.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+  "mongodb+srv://walsc024:Poppy2537@cluster0.lcx1i.mongodb.net/interchat?retryWrites=true&w=majority";
 
 // Updating mongoose's promise version
 mongoose.Promise = global.Promise;

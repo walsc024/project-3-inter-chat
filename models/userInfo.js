@@ -8,10 +8,16 @@ const userInfo = new Schema({
       name: {
         type: String,
       },
-      userId: {
+      sub: {
         type: Number,
       },
       email: {
+        type: String,
+      },
+      desired: {
+        type: String,
+      },
+      current: {
         type: String,
       },
     },

@@ -1,14 +1,15 @@
 import React from "react";
 import { Grid, Card } from "semantic-ui-react";
-
-import Header from "../components/Header";
+import LogoutButton from "../components/LogoutButton";
 import StartButton from "../components/StartButton";
 import LangDropdown from "../components/LangDropdown";
+import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 
 const Dashboard = () => {
+  const { user } = useAuth0();
   return (
     <>
-      <Header />
+      <LogoutButton />
       <Card centered>
         <Card.Content>
           <Grid centered>
@@ -20,6 +21,10 @@ const Dashboard = () => {
           </Grid>
         </Card.Content>
       </Card>
+      <p>{user.sub}</p>
+      <p>{user.email}</p>
+      <p>{user.name}</p>
+      <p>{user.nickname}</p>
     </>
   );
 };
