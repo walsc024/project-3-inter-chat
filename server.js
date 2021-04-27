@@ -74,6 +74,26 @@ if (process.env.NODE_ENV === "production") {
 io.on("connection", (socket) => {
   console.log(`Client ${socket.id} connected`);
 
+  socket.on(JOIN_QUEUE, (data) => {
+    const { fluentLanguage, trainingLanguage } = data;
+
+    addSocketToQueue(socket, fluentLanguage, trainingLanguage);
+
+    const addSocketToQueue = (socket, fluentLanguage, trainingLanguage) => {
+      const queuedSockets = [];
+
+      const matchedSocket = queuedSockets.find();
+
+      if (!matchedSocket) {
+        queuedSockets.push({
+          socket,
+          fluentLanguage,
+          trainingLanguage,
+        });
+      }
+    };
+  });
+
   // Join a conversation
   const { roomId } = socket.handshake.query;
   socket.join(roomId);
