@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Button } from "semantic-ui-react";
 
-const LoginButton = () => {
+const SignUpButton = () => {
   const { loginWithRedirect } = useAuth0();
   return (
     <Button
@@ -11,9 +11,9 @@ const LoginButton = () => {
       className="btn btn-primary btn-block"
       onClick={() => loginWithRedirect()}
     >
-      Log In
+      Sign Up
     </Button>
   );
 };
 
-export default LoginButton;
+export default SignUpButton;

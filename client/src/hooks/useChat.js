@@ -36,7 +36,7 @@ const useChat = (roomId) => {
       senderId: socketRef.current.id,
     });
   };
-
+  console.log(messages);
   return { messages, sendMessage };
 };
 
