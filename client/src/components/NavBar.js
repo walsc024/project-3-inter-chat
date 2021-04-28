@@ -1,19 +1,19 @@
 import React from "react";
 
-import MainNav from "./main-nav";
+import { Container, Image, Menu, Segment } from "semantic-ui-react";
+import Logo from "../Images/logo.png";
+
 import AuthNav from "./auth-nav";
 
 const NavBar = () => {
   return (
-    <div className="nav-container mb-3">
-      <nav className="navbar navbar-expand-md navbar-light bg-light">
-        <div className="container">
-          <div className="navbar-brand logo" />
-          <MainNav />
-          <AuthNav />
-        </div>
-      </nav>
-    </div>
+    <Menu size="large" borderless shadowless fixed="top">
+      <Menu.Item>
+        <>
+          <Image size="small" className="logo" src={Logo} alt={""} />
+        </>
+      </Menu.Item>
+    </Menu>
   );
 };
 
