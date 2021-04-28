@@ -61,7 +61,9 @@ const LangDropdown = ({ onComplete }) => {
         searchInput={{ id: "form-select-control-choice-language" }}
         required
       />
-      <Button role="submit">Find a language buddy!</Button>
+      <Button size="large" fluid role="submit">
+        Find a language buddy!
+      </Button>
     </Form>
   );
 };
