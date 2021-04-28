@@ -41,12 +41,12 @@ const useSocket = () => {
     });
   }, []);
 
-  //   const sendMessage = (messageBody) => {
-  //     socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
-  //       body: messageBody,
-  //       senderId: socketRef.current.id,
-  //     });
-  //   };
+  // const sendMessage = (messageBody) => {
+  //   socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
+  //     body: messageBody,
+  //     senderId: socketRef.current.id,
+  //   });
+  // };
 
   const matchNewUser = (fluentLanguage, trainingLanguage) => {
     socketRef.current.emit(FIND_USER, {
