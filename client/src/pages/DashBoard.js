@@ -1,12 +1,16 @@
 import React from "react";
+import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 import { Grid, Card } from "semantic-ui-react";
+
 import LogoutButton from "../components/LogoutButton";
 import StartButton from "../components/StartButton";
 import LangDropdown from "../components/LangDropdown";
-import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
+import useSocket from "../hooks/useSocket";
 
 const Dashboard = () => {
   const { user } = useAuth0();
+  const { matchNewUser } = useSocket();
+
   return (
     <>
       <LogoutButton />
@@ -14,7 +18,7 @@ const Dashboard = () => {
         <Card.Content>
           <Grid centered>
             <Grid.Column>
-              <LangDropdown />
+              <LangDropdown onComplete={matchNewUser} />
               <br />
               <StartButton />
             </Grid.Column>

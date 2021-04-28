@@ -1,20 +1,17 @@
 const LanguageTranslatorV3 = require("ibm-watson/language-translator/v3");
 const { IamAuthenticator } = require("ibm-watson/auth");
-
 const languageTranslator = new LanguageTranslatorV3({
   version: "2018-05-01",
   authenticator: new IamAuthenticator({
-    apikey: "f09f08f2-a24d-4985-b74c-53394e57ea3f",
+    apikey: "HzUYuDSdPrFWMDrpB4D5TRPbLYrriMLuZAz_p49HcwFk",
   }),
   serviceUrl:
-    "https://cloud.ibm.com/authorize/ffa0977684754a90bd74a46551aee72b",
+    "https://api.eu-gb.language-translator.watson.cloud.ibm.com/instances/a829465c-01f6-45be-94a8-4b57b822264a",
 });
-
 const translateParams = {
-  text: "Hello, how are you today?",
-  modelId: "en-es",
+  text: "Hello, my name is David. What is your name?",
+  modelId: "en-fr",
 };
-
 languageTranslator
   .translate(translateParams)
   .then((translationResult) => {

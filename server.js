@@ -16,6 +16,11 @@ const io = require("socket.io")(server, {
 const PORT = process.env.PORT || 8080;
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
+const FIND_USER = "findUser";
+const NEW_USER_FOUND = "newUserFound";
+const ADDED_TO_QUEUE = "addedToQueue";
+
+const queuedUsers = [];
 
 // Assign the value of your mongoDB connection string to this constant
 const dbConnectString =
@@ -71,43 +76,66 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+const checkForMatchingUser = (fluentLanguage, trainingLanguage) =>
+  queuedUsers.find(
+    (user) =>
+      fluentLanguage === user.trainingLanguage &&
+      trainingLanguage === user.fluentLanguage
+  );
+
+const addUserToQueue = (socketId, fluentLanguage, trainingLanguage) => {
+  // @TODO - EMIT AN EVENT TO TELL FE YOURE IN QUEUE
+  io.to(socketId).emit(ADDED_TO_QUEUE);
+
+  queuedUsers.push({ socketId, fluentLanguage, trainingLanguage });
+};
+
+//When user clicks start chat...
+
 io.on("connection", (socket) => {
   console.log(`Client ${socket.id} connected`);
 
-  socket.on(JOIN_QUEUE, (data) => {
+  const matchTwoUsersTogether = (userOneSocketId, userTwoSocketId) => {
+    const userOneSocket = io.sockets.sockets.get(userOneSocketId);
+    const userTwoSocket = io.sockets.sockets.get(userTwoSocketId);
+
+    const roomId = `${userOneSocketId + userTwoSocketId}`;
+
+    userOneSocket.join(roomId);
+    userTwoSocket.join(roomId);
+
+    io.in(roomId).emit(NEW_USER_FOUND, {
+      roomId,
+    });
+  };
+
+  const { id } = socket;
+
+  socket.on(FIND_USER, (data) => {
+    console.log("called with ", data);
     const { fluentLanguage, trainingLanguage } = data;
 
-    addSocketToQueue(socket, fluentLanguage, trainingLanguage);
+    const matchedUser = checkForMatchingUser(fluentLanguage, trainingLanguage);
 
-    const addSocketToQueue = (socket, fluentLanguage, trainingLanguage) => {
-      const queuedSockets = [];
-
-      const matchedSocket = queuedSockets.find();
-
-      if (!matchedSocket) {
-        queuedSockets.push({
-          socket,
-          fluentLanguage,
-          trainingLanguage,
-        });
-      }
-    };
+    if (matchedUser) {
+      matchTwoUsersTogether(id, matchedUser.socketId);
+    } else {
+      console.log("There was no user to match");
+      addUserToQueue(id, fluentLanguage, trainingLanguage);
+    }
   });
 
-  // Join a conversation
-  const { roomId } = socket.handshake.query;
-  socket.join(roomId);
-
-  // Listen for new messages
-  socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
-    io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+  socket.on(NEW_CHAT_MESSAGE_EVENT, ({ roomId, ...rest }) => {
+    io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, rest);
   });
 
-  // Leave the room if the user closes the socket
   socket.on("disconnect", () => {
+    // @TOOD - How does the disconnect CB know what room id the socket was in?
     console.log(`Client ${socket.id} diconnected`);
 
-    socket.leave(roomId);
+    // if (data.roomId) {
+    //   socket.leave(roomId);
+    // }
   });
 });
 
