@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 import { Grid, Card, GridColumn } from "semantic-ui-react";
 import { Placeholder, Image, Menu, Segment } from "semantic-ui-react";
@@ -8,11 +8,11 @@ import Logo from "../Images/logo.png";
 import LogoutButton from "../components/LogoutButton";
 import StartButton from "../components/StartButton";
 import LangDropdown from "../components/LangDropdown";
-import useSocket from "../hooks/useSocket";
+import SocketContext from "../context/SocketContext";
 
 const Dashboard = () => {
   const { user } = useAuth0();
-  const { matchNewUser } = useSocket();
+  const { matchNewUser, queueing } = useContext(SocketContext);
 
   return (
     <>
@@ -37,7 +37,11 @@ const Dashboard = () => {
             <Card.Content>
               <Grid centered>
                 <Grid.Column>
-                  <LangDropdown onComplete={matchNewUser} />
+                  {queueing ? (
+                    <div>Waiting for a mate</div>
+                  ) : (
+                    <LangDropdown onComplete={matchNewUser} />
+                  )}
                 </Grid.Column>
               </Grid>
             </Card.Content>

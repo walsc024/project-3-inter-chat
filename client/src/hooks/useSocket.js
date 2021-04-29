@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
+import { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export const FIND_USER = "findUser";
 export const NEW_USER_FOUND = "newUserFound";
@@ -7,8 +8,9 @@ export const ADDED_TO_QUEUE = "addedToQueue";
 
 const SOCKET_SERVER_URL = "http://localhost:8080";
 
-const useSocket = () => {
+const useSocket = (history) => {
   const socketRef = useRef();
+  const [queueing, setQueuing] = useState(false);
 
   //   useEffect(() => {
   //     socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
@@ -30,12 +32,13 @@ const useSocket = () => {
     socketRef.current = socketIOClient(SOCKET_SERVER_URL);
 
     socketRef.current.on(NEW_USER_FOUND, ({ roomId }) => {
-      console.log("Assigned new room: ", roomId);
+      history.push(`/chatpage/${roomId}`);
       // @TODO - We have been assigned a new room id
       // and need to do something
     });
 
     socketRef.current.on(ADDED_TO_QUEUE, () => {
+      setQueuing(true);
       console.log("Added to queue");
       // @TODO - Load a spinner or something...
     });
@@ -55,7 +58,7 @@ const useSocket = () => {
     });
   };
 
-  return { matchNewUser };
+  return { matchNewUser, queueing };
 };
 
 export default useSocket;
