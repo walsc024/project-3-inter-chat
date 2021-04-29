@@ -1,15 +1,18 @@
 import React from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Image } from "semantic-ui-react";
 import MessagesContainer from "../components/MessagesContainer";
 import InputContainer from "../components/InputContainer";
 import "./ChatPage.css";
 import useChat from "../hooks/useChat";
+import Logo from "../Images/logo.png";
+import NavBar from "../components/NavBar";
 
 const ChatPage = () => {
   const { messages, sendMessage } = useChat(123);
 
   return (
     <Grid>
+      <NavBar />
       <Grid.Column width={4} />
       <Grid.Column width={8}>
         <Grid.Row className="messages-container">
