@@ -19,6 +19,7 @@ const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 const FIND_USER = "findUser";
 const NEW_USER_FOUND = "newUserFound";
 const ADDED_TO_QUEUE = "addedToQueue";
+const NEW_CHAT_MESSAGE = "newChatMessage";
 
 const queuedUsers = [];
 
@@ -125,8 +126,8 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on(NEW_CHAT_MESSAGE_EVENT, ({ roomId, ...rest }) => {
-    io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, rest);
+  socket.on(NEW_CHAT_MESSAGE, ({ roomId, ...rest }) => {
+    io.in(roomId).emit(NEW_CHAT_MESSAGE, { ...rest });
   });
 
   socket.on("disconnect", () => {
