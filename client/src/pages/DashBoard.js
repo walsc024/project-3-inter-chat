@@ -1,6 +1,6 @@
 import React from "react";
 import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
-import { Grid, Card } from "semantic-ui-react";
+import { Grid, Card, GridColumn } from "semantic-ui-react";
 import { Placeholder, Image, Menu, Segment } from "semantic-ui-react";
 
 import Logo from "../Images/logo.png";
@@ -26,8 +26,13 @@ const Dashboard = () => {
           <LogoutButton />
         </Menu.Item>
       </Menu>
-      <Grid columns={2} relaxed="very" stackable>
-        <Grid.Column style={{ paddingTop: "10em" }} verticalAlign="middle">
+      <Grid relaxed="very" stackable>
+        <Grid.Column width={1}></Grid.Column>
+        <Grid.Column
+          width={7}
+          style={{ paddingTop: "10em" }}
+          verticalAlign="middle"
+        >
           <Card centered style={{ height: "250px", width: "500px" }}>
             <Card.Content>
               <Grid centered>
@@ -38,31 +43,11 @@ const Dashboard = () => {
             </Card.Content>
           </Card>
         </Grid.Column>
-        <Grid.Column style={{ paddingTop: "7em" }} verticalAlign="middle">
-          <Segment raised>
-            <Placeholder>
-              <Placeholder.Header image>
-                <Placeholder.Line />
-                <Placeholder.Line />
-              </Placeholder.Header>
-              <Placeholder.Paragraph>
-                <Placeholder.Line length="medium" />
-                <Placeholder.Line length="short" />
-              </Placeholder.Paragraph>
-            </Placeholder>
-          </Segment>
-          <Segment raised>
-            <Placeholder>
-              <Placeholder.Header image>
-                <Placeholder.Line />
-                <Placeholder.Line />
-              </Placeholder.Header>
-              <Placeholder.Paragraph>
-                <Placeholder.Line length="medium" />
-                <Placeholder.Line length="short" />
-              </Placeholder.Paragraph>
-            </Placeholder>
-          </Segment>
+        <Grid.Column
+          width={7}
+          style={{ paddingTop: "7em" }}
+          verticalAlign="middle"
+        >
           <Segment raised>
             <Placeholder>
               <Placeholder.Header image>
@@ -124,6 +109,7 @@ const Dashboard = () => {
             </Placeholder>
           </Segment>
         </Grid.Column>
+        <Grid.Column width={1}></Grid.Column>
       </Grid>
       {/* <p>{user.sub}</p>
       <p>{user.email}</p>

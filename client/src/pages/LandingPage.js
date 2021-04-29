@@ -16,13 +16,13 @@ const LandingPage = () => {
       <>
         <NavBar />
         <Grid columns={2} relaxed="very" stackable>
-          <Grid.Column style={{ paddingTop: "3.5em" }}>
+          <Grid.Column style={{ paddingTop: "7.5em" }}>
             <img
               className="graphic"
               src={Graphic}
               alt={""}
-              width="1003"
-              height="1003"
+              width="800"
+              height="800"
             />
           </Grid.Column>
           <Grid.Column style={{ paddingTop: "7em" }} verticalAlign="middle">
@@ -31,7 +31,7 @@ const LandingPage = () => {
                 centered
                 style={{
                   height: "350px",
-                  width: "700px",
+                  width: "600px",
                 }}
               >
                 <Card.Content textAlign="center">
