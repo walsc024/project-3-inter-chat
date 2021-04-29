@@ -1,8 +1,10 @@
 import { createContext } from "react";
 
 const SocketContext = createContext({
-  queueing: false,
   matchNewUser: () => {},
+  messages: [],
+  sendMessage: () => {},
+  queueing: false,
 });
 
 export default SocketContext;

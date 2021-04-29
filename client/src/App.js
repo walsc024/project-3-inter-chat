@@ -17,7 +17,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/dashboard" component={DashBoard} />
-          <Route path="/chatpage/:roomId" component={ChatPage} />
+          <Route path="/chatpage" component={ChatPage} />
         </Switch>
       </Router>
     </SocketContext.Provider>

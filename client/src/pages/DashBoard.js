@@ -9,9 +9,11 @@ import LogoutButton from "../components/LogoutButton";
 import StartButton from "../components/StartButton";
 import LangDropdown from "../components/LangDropdown";
 import SocketContext from "../context/SocketContext";
+import Queueing from "../components/WaitingRoom";
 
 const Dashboard = () => {
   const { user } = useAuth0();
+  console.log("I am the user: ", user);
   const { matchNewUser, queueing } = useContext(SocketContext);
 
   return (
@@ -38,7 +40,9 @@ const Dashboard = () => {
               <Grid centered>
                 <Grid.Column>
                   {queueing ? (
-                    <div>Waiting for a mate</div>
+                    <div>
+                      <Queueing />
+                    </div>
                   ) : (
                     <LangDropdown onComplete={matchNewUser} />
                   )}
