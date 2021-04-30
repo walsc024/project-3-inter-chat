@@ -1,7 +1,7 @@
 import React from "react";
 import { Segment, Placeholder } from "semantic-ui-react";
 
-const Placeholder = () => (
+const SavedPlaceholder = () => (
   <Segment raised>
     <Placeholder>
       <Placeholder.Header image>
@@ -16,4 +16,4 @@ const Placeholder = () => (
   </Segment>
 );
 
-export default Placeholder;
+export default SavedPlaceholder;
