@@ -82,7 +82,7 @@ const checkForMatchingUser = (fluentLanguage, trainingLanguage) =>
   );
 
 const addUserToQueue = (socketId, fluentLanguage, trainingLanguage) => {
-  // @TODO - EMIT AN EVENT TO TELL FE YOURE IN QUEUE
+  //EMIT AN EVENT TO TELL FE YOURE IN QUEUE
   io.to(socketId).emit(ADDED_TO_QUEUE);
 
   queuedUsers.push({ socketId, fluentLanguage, trainingLanguage });
@@ -134,6 +134,88 @@ io.on("connection", (socket) => {
     //   socket.leave(roomId);
     // }
   });
+
+  /**********************************************************************************************************
+                                           Translation Socket
+ ***********************************************************************************************************/
+
+  //When a translation tag is read from chat
+  // socket.on("translate", function (data) {
+  //   console.log(data.message);
+  //   console.log(data.fluentLanguage);
+  //   console.log(data.trainingLanguage);
+
+  //   language_translation.translate(
+  //     {
+  //       text: data.message,
+  //       source: data.fluentLanguage,
+  //       target: data.trainingLanguage,
+  //     },
+  //     function (err, translation) {
+  //       console.log("Watson will translate : " + data.message);
+
+  //       if (err) {
+  //         console.log("error:", err);
+
+  //         socket.emit("translationResults", {
+  //           username: socket.user.nickname,
+  //           message: "Error translating. Try again.",
+  //         });
+
+  //         socket.broadcast.emit("translationResults", {
+  //           username: socket.user.nickname,
+  //           message: "Error translating. Try again.",
+  //         });
+  //       } else {
+  //         console.log(translation.translations[0].translation);
+  //         data.message = translation.translations[0].translation;
+
+  //         socket.emit("translationResults", {
+  //           username: socket.user.nickname,
+  //           message: data.message,
+  //         });
+
+  //         socket.broadcast.emit("translationResults", {
+  //           username: socket.user.nickname,
+  //           message: data.message,
+  //         });
+  //       }
+  //     }
+  //   );
+  // });
+
+  /************************************************************************************************************
+                                            Translation Handling
+      *************************************************************************************************************/
+
+  //Translate to Spanish
+  // if (message.substring(0, 18).toLowerCase() == "/translate spanish") {
+  //   console.log("sending to translate");
+  //   trainingLanguage = "es";
+  //   socket.emit("translate", {
+  //     message: message.substring(19),
+  //     fluentLanguage: fluentLanguage,
+  //     trainingLanguage: trainingLanguage,
+  //   });
+  // }
+  //Translate to French
+  //   else if (message.substring(0, 17).toLowerCase() == "/translate french") {
+  //     console.log("sending to translate");
+  //     trainingLanguage = "fr";
+  //     socket.emit("translate", {
+  //       message: message.substring(18),
+  //       fluentLanguage: fluentLanguage,
+  //       trainingLanguage: trainingLanguage,
+  //     });
+  //   } else if (message.substring(0, 17).toLowerCase() == "/translate english") {
+  //     console.log("sending to translate");
+  //     trainingLanguage = "en";
+  //     socket.emit("translate", {
+  //       message: message.substring(18),
+  //       fluentLanguage: fluentLanguage,
+  //       trainingLanguage: trainingLanguage,
+  //     });
+  //   }
 });
 
 // Connecting to MongoDB through Mongoose

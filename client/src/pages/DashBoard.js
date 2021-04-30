@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Grid, Card } from "semantic-ui-react";
-import { Placeholder, Image, Menu } from "semantic-ui-react";
+import { Image, Menu } from "semantic-ui-react";
 
 import Logo from "../Images/logo.png";
 
@@ -9,7 +9,7 @@ import LogoutButton from "../components/LogoutButton";
 import LangDropdown from "../components/LangDropdown";
 import SocketContext from "../context/SocketContext";
 import Queueing from "../components/WaitingRoom";
-import Placeholder from "../components/Placeholder";
+import SavedPlaceholder from "../components/Placeholder";
 
 const Dashboard = () => {
   const { user } = useAuth0();
@@ -56,11 +56,11 @@ const Dashboard = () => {
           style={{ paddingTop: "7em" }}
           verticalAlign="middle"
         >
-          <Placeholder />
-          <Placeholder />
-          <Placeholder />
-          <Placeholder />
-          <Placeholder />
+          <SavedPlaceholder />
+          <SavedPlaceholder />
+          <SavedPlaceholder />
+          <SavedPlaceholder />
+          <SavedPlaceholder />
         </Grid.Column>
         <Grid.Column width={1}></Grid.Column>
       </Grid>
