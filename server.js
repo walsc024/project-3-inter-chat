@@ -37,9 +37,6 @@ app.use((req, res, next) => {
   next(); //Make sure program goes on in execution
 });
 
-// Middleware to parse the request body as json
-// app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(bodyParser.json());
 
 app.get("/", () => {
@@ -92,7 +89,6 @@ const addUserToQueue = (socketId, fluentLanguage, trainingLanguage) => {
 };
 
 //When user clicks start chat...
-
 io.on("connection", (socket) => {
   console.log(`Client ${socket.id} connected`);
 

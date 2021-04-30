@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
-import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
-import { Grid, Card, GridColumn } from "semantic-ui-react";
-import { Placeholder, Image, Menu, Segment } from "semantic-ui-react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Grid, Card } from "semantic-ui-react";
+import { Placeholder, Image, Menu } from "semantic-ui-react";
 
 import Logo from "../Images/logo.png";
 
 import LogoutButton from "../components/LogoutButton";
-import StartButton from "../components/StartButton";
 import LangDropdown from "../components/LangDropdown";
 import SocketContext from "../context/SocketContext";
 import Queueing from "../components/WaitingRoom";
+import Placeholder from "../components/Placeholder";
 
 const Dashboard = () => {
   const { user } = useAuth0();
@@ -56,66 +56,11 @@ const Dashboard = () => {
           style={{ paddingTop: "7em" }}
           verticalAlign="middle"
         >
-          <Segment raised>
-            <Placeholder>
-              <Placeholder.Header image>
-                <Placeholder.Line />
-                <Placeholder.Line />
-              </Placeholder.Header>
-              <Placeholder.Paragraph>
-                <Placeholder.Line length="medium" />
-                <Placeholder.Line length="short" />
-              </Placeholder.Paragraph>
-            </Placeholder>
-          </Segment>
-          <Segment raised>
-            <Placeholder>
-              <Placeholder.Header image>
-                <Placeholder.Line />
-                <Placeholder.Line />
-              </Placeholder.Header>
-              <Placeholder.Paragraph>
-                <Placeholder.Line length="medium" />
-                <Placeholder.Line length="short" />
-              </Placeholder.Paragraph>
-            </Placeholder>
-          </Segment>
-          <Segment raised>
-            <Placeholder>
-              <Placeholder.Header image>
-                <Placeholder.Line />
-                <Placeholder.Line />
-              </Placeholder.Header>
-              <Placeholder.Paragraph>
-                <Placeholder.Line length="medium" />
-                <Placeholder.Line length="short" />
-              </Placeholder.Paragraph>
-            </Placeholder>
-          </Segment>
-          <Segment raised>
-            <Placeholder>
-              <Placeholder.Header image>
-                <Placeholder.Line />
-                <Placeholder.Line />
-              </Placeholder.Header>
-              <Placeholder.Paragraph>
-                <Placeholder.Line length="medium" />
-                <Placeholder.Line length="short" />
-              </Placeholder.Paragraph>
-            </Placeholder>
-          </Segment>
-          <Segment raised>
-            <Placeholder>
-              <Placeholder.Header image>
-                <Placeholder.Line />
-                <Placeholder.Line />
-              </Placeholder.Header>
-              <Placeholder.Paragraph>
-                <Placeholder.Line length="medium" />
-                <Placeholder.Line length="short" />
-              </Placeholder.Paragraph>
-            </Placeholder>
-          </Segment>
+          <Placeholder />
+          <Placeholder />
+          <Placeholder />
+          <Placeholder />
+          <Placeholder />
         </Grid.Column>
         <Grid.Column width={1}></Grid.Column>
       </Grid>
