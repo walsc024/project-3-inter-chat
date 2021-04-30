@@ -46,7 +46,7 @@ const useSocket = (history) => {
       roomId,
       body: messageBody,
       author: user.nickname,
-      createdAt: new Date.now(),
+      // createdAt: Date.now(),
     });
   };
 
