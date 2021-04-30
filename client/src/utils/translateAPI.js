@@ -36,4 +36,6 @@ function translate(languages, message) {
     });
 }
 
-translate("en-fr", "Good day");
+// translate("en-fr", "Good day");
+
+export default translate;
