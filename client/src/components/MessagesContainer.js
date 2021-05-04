@@ -1,9 +1,15 @@
-import React, { Component, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Comment } from "semantic-ui-react";
 const MessagesContainer = (props) => {
   const [messageToggleStatus, setMessageToggleStatus] = useState(
     props.messages.map(() => false)
   );
+
+  useEffect(() => {
+    if (messageToggleStatus.length !== props.messages.length) {
+      setMessageToggleStatus([...messageToggleStatus, false]);
+    }
+  }, [props.messages]);
 
   return (
     <Comment.Group>
