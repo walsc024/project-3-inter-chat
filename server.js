@@ -5,6 +5,7 @@ const path = require("path");
 const http = require("http");
 
 const Message = require("./models/message");
+const translation = require("./utils/translation");
 
 const app = express();
 const server = http.createServer(app);
@@ -122,9 +123,24 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on(NEW_CHAT_MESSAGE, ({ roomId, ...rest }) => {
-    io.in(roomId).emit(NEW_CHAT_MESSAGE, { ...rest });
-  });
+  socket.on(
+    NEW_CHAT_MESSAGE,
+    ({ roomId, fluentLanguage, trainingLanguage, ...rest }) => {
+      translation(fluentLanguage, trainingLanguage, rest.body).then(
+        (trainingResponse) => {
+          translation(trainingLanguage, fluentLanguage, rest.body).then(
+            (fluentResponse) => {
+              io.in(roomId).emit(NEW_CHAT_MESSAGE, {
+                fluentTranslation: fluentResponse.result.translations,
+                trainingTranslation: trainingResponse.result.translations,
+                ...rest,
+              });
+            }
+          );
+        }
+      );
+    }
+  );
 
   socket.on("disconnect", () => {
     // @TOOD - How does the disconnect CB know what room id the socket was in?
@@ -220,7 +236,12 @@ io.on("connection", (socket) => {
 
 // Connecting to MongoDB through Mongoose
 mongoose
-  .connect(dbConnectString)
+  .connect(process.env.MONGODB_URI || dbConnectString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
   .then(() => {
     console.log("connected to the db");
 

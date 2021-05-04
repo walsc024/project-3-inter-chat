@@ -3,7 +3,6 @@ import { Grid, Image } from "semantic-ui-react";
 import MessagesContainer from "../components/MessagesContainer";
 import InputContainer from "../components/InputContainer";
 import "./ChatPage.css";
-import useChat from "../hooks/useChat";
 import Logo from "../Images/logo.png";
 import NavBar from "../components/NavBar";
 import SocketContext from "../context/SocketContext";
