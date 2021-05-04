@@ -16,6 +16,8 @@ const useSocket = (history) => {
   const [queueing, setQueuing] = useState(false);
   const [roomId, setRoomId] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [fluentLanguage, setFluentLanguage] = useState(undefined);
+  const [trainingLanguage, setTrainingLanguage] = useState(undefined);
 
   useEffect(() => {
     console.log("Connecting");
@@ -43,6 +45,8 @@ const useSocket = (history) => {
 
   const sendMessage = (messageBody) => {
     socketRef.current.emit(NEW_CHAT_MESSAGE, {
+      fluentLanguage,
+      trainingLanguage,
       roomId,
       body: messageBody,
       author: user.nickname,
@@ -51,6 +55,9 @@ const useSocket = (history) => {
   };
 
   const matchNewUser = (fluentLanguage, trainingLanguage) => {
+    setFluentLanguage(fluentLanguage);
+    setTrainingLanguage(trainingLanguage);
+
     socketRef.current.emit(FIND_USER, {
       fluentLanguage,
       trainingLanguage,
