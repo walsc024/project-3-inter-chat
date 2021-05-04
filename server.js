@@ -40,10 +40,6 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-app.get("/", () => {
-  console.log("You hit the home route");
-});
-
 // GET all the previous messages
 app.get("/api/message", (req, res) => {
   console.log("AM I HITTING THIS!!!!!!!!!!!");
