@@ -8,7 +8,7 @@ const NEW_USER_FOUND = "newUserFound";
 const ADDED_TO_QUEUE = "addedToQueue";
 const NEW_CHAT_MESSAGE = "newChatMessage";
 
-const SOCKET_SERVER_URL = "http://localhost:8080";
+const SOCKET_SERVER_URL = "/";
 
 const useSocket = (history) => {
   const { user } = useAuth0();
