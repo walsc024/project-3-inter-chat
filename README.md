@@ -41,7 +41,7 @@ SO THAT I can become multilangual faster
 
 ## Deployment
 
-Deployed through Heroku, interchat is available [here]()
+Deployed through Heroku, interchat is available [here](https://inter-chat01.herokuapp.com/)
 
 <!-- screenshots -->
 
